@@ -1,0 +1,44 @@
+name: sayonara
+version: '0'
+summary: Sayonara
+description: |
+  Sayonara is a small, clear and fast audio player for Linux written in C++,
+  supported by the Qt framework. It uses Gstreamer as audio backend.
+
+grade: devel
+confinement: strict
+
+apps:
+  sayonara:
+    command: desktop-launch $SNAP/bin/launcher.sh
+    plugs: [network, pulseaudio, x11, unity7]
+
+parts:
+  launcher:
+    plugin: copy
+    source: .
+    files:
+      "launcher.sh": bin/launcher.sh
+  sayonara:
+    after: [desktop-qt5]
+    plugin: cmake
+    source: https://git.sayonara-player.com/sayonara.git
+    build-packages:
+      - qt5-default
+      - qttools5-dev
+      - qttools5-dev-tools
+      - libqt5core5a
+      - libqt5network5
+      - libqt5sql5
+      - libqt5sql5-sqlite
+      - libqt5xml5
+      - libtag1-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libsqlite3-0
+      - libmtp-dev
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - g++
+    stage-packages:
+      - libqt5sql5-sqlite
